@@ -8,7 +8,8 @@ const config: DataSourceOptions = {
   password: 'redbull',
   database: 'mediumclone',
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-  synchronize: true,
+  synchronize: false,
+  migrations: [__dirname + '/**/*.migration{.ts,.js}', 'src/database/migrations/*-migration.ts'],
   // logging: true,
   // dropSchema: true,
 };
