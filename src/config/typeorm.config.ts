@@ -14,7 +14,7 @@ const AppDataSource = new DataSource({
   database: 'mediumclone',
   synchronize: false,
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-  migrations: ['src/database/migrations/*-migration.ts'],
+  migrations: ['src/migrations/*.ts'],
 
   migrationsRun: false,
   logging: true,

@@ -9,7 +9,7 @@ const config: DataSourceOptions = {
   database: 'mediumclone',
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: false,
-  migrations: [__dirname + '/**/*.migration{.ts,.js}', 'src/database/migrations/*-migration.ts'],
+  migrations: [__dirname + '/**/*.migration{.ts,.js}', 'src/migrations/*.ts'],
   // logging: true,
   // dropSchema: true,
 };
