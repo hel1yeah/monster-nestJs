@@ -2,12 +2,13 @@ import { Module } from '@nestjs/common';
 import { AppController } from '@app/app.controller';
 import { AppService } from '@app/app.service';
 import { TagModule } from '@app/tag/tag.module';
+import { TagTestModule } from '@app/tagTest/tag.module';
 import { UserModule } from '@app/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import ormconfig from '@app/ormconfig';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(ormconfig), TagModule, UserModule],
+  imports: [TypeOrmModule.forRoot(ormconfig), TagModule, UserModule, TagTestModule],
   controllers: [AppController],
   providers: [AppService],
 })
