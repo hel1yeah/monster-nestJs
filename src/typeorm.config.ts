@@ -1,7 +1,8 @@
 import { DataSource } from 'typeorm';
+// import { CONNECTION } from './db.connection';
 import config from './ormconfig';
 
-export const AppDataSource = new DataSource(config);
+export const AppDataSource = new DataSource({ ...config });
 
 AppDataSource.initialize()
   .then(() => {
