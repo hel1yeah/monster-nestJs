@@ -17,8 +17,8 @@ export class UserEntity {
   @Column()
   username: string;
 
-  @Column()
-  password: string;
+  @Column({ select: false })
+  password?: string;
 
   @BeforeInsert()
   async hashPassword() {
