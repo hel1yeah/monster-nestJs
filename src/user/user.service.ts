@@ -6,8 +6,8 @@ import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/createUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { sign } from 'jsonwebtoken';
-import { config } from 'dotenv';
 import { compare } from 'bcrypt';
+import { config } from 'dotenv';
 config();
 
 @Injectable()
@@ -56,6 +56,16 @@ export class UserService {
     return user;
   }
 
+  async findById(id: number): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.UNRECOVERABLE_ERROR);
+    }
+
+    return user;
+  }
+
   generateJwt(user: UserEntity): string {
     return sign(
       {
@@ -76,29 +86,3 @@ export class UserService {
     };
   }
 }
-
-// async loginUser(loginUserDto: LoginUserDto): Promise<any> {
-//   const user = await this.userRepository.findOne({
-//     where: { email: loginUserDto.email },
-//     select: ['id', 'email', 'bio', 'image', 'username', 'password'],
-//   });
-
-//   if (!user) {
-//     throw new HttpException(
-//       'Credentials are not valid',
-//       HttpStatus.UNPROCESSABLE_ENTITY,
-//     );
-//   }
-
-//   const isPasswordCorrect = await compare(loginUserDto.password, user.password);
-
-//   if (!isPasswordCorrect) {
-//     throw new HttpException(
-//       'Credentials are not valid',
-//       HttpStatus.UNPROCESSABLE_ENTITY,
-//     );
-//   }
-
-//   delete user.password;
-//   return user;
-// }
