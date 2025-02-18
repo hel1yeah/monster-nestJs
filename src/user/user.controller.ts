@@ -6,6 +6,7 @@ import {
   ValidationPipe,
   Get,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -13,6 +14,9 @@ import { LoginUserDto } from './dto/loginUser.dto';
 import { UserResponseInterface } from '@app/user/types/userResponse.interface';
 import { ExpressRequestInterface } from '@app/types/expressRequest.interface';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { User } from './decorators/user.decorators';
+import { UserEntity } from './user.entity';
+import { AuthGuard } from './guards/auth.guard';
 
 @Controller()
 export class UserController {
@@ -38,12 +42,8 @@ export class UserController {
   }
 
   @Get('user')
-  async currentUser(
-    @Req() request: ExpressRequestInterface,
-  ): Promise<UserResponseInterface> {
-    if (!request.user) {
-      throw new HttpException('Credentials not found', HttpStatus.UNPROCESSABLE_ENTITY);
-    }
-    return this.userService.buildUserResponse(request.user);
+  @UseGuards(AuthGuard)
+  async currentUser(@User() user: UserEntity): Promise<UserResponseInterface> {
+    return this.userService.buildUserResponse(user);
   }
 }
