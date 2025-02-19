@@ -1,4 +1,11 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  BeforeUpdate,
+} from 'typeorm';
 import { hash } from 'bcrypt';
 import { ArticleEntity } from '../articles/article.entity';
 
@@ -21,6 +28,17 @@ export class UserEntity {
 
   @Column({ select: false })
   password?: string;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
+
+  @BeforeUpdate()
+  updateTimestamp() {
+    this.updatedAt = new Date();
+  }
 
   @BeforeInsert()
   async hashPassword() {
