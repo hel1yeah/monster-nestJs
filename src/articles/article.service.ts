@@ -4,6 +4,7 @@ import { ArticleEntity } from './article.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateArticleDto } from './dto/createArticle.dto';
+import { ArticleResponseInterface } from './types/articleResponse.interface';
 
 @Injectable()
 export class ArticleService {
@@ -11,7 +12,7 @@ export class ArticleService {
     @InjectRepository(ArticleEntity)
     private readonly articleRepository: Repository<ArticleEntity>,
   ) {}
-  createArticle(
+  async createArticle(
     currentUser: UserEntity,
     articleDto: CreateArticleDto,
   ): Promise<ArticleEntity> {
@@ -29,6 +30,10 @@ export class ArticleService {
       .replace(/[^\w-]+/g, '');
 
     article.author = currentUser;
-    return this.articleRepository.save(article);
+    return await this.articleRepository.save(article);
+  }
+
+  buildArticleResponse(article: ArticleEntity): ArticleResponseInterface {
+    return { article };
   }
 }

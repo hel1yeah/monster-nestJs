@@ -51,8 +51,8 @@ export class UserController {
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
   async updateUser(
-    @Body('user') updateUserDto: UpdateUserDto,
     @User() userJWT: UserEntity,
+    @Body('user') updateUserDto: UpdateUserDto,
   ): Promise<UserResponseInterface> {
     const user = await this.userService.updateUser(updateUserDto, userJWT);
     return this.userService.buildUserResponse(user);
