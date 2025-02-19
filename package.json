@@ -18,7 +18,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs",
     "db:drop": "npm run typeorm schema:drop -- -d src/typeorm.config.ts",
-    "db:migration": "npm run typeorm migration:generate -- -d src/typeorm.config.ts src/migrations/auto.migration",
+    "db:migration": "npm run typeorm migration:generate -- -d src/typeorm.config.ts src/migrations/autoMigration",
     "db:migration:run": "npm run typeorm migration:run -- -d src/typeorm.config.ts",
     "db:migration:revert": "npm run typeorm migration:revert -- -d src/typeorm.config.ts"
   },
